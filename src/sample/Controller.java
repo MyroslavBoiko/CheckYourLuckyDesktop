@@ -13,8 +13,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sample.backend.entity.RangeLuckEntity;
 import sample.backend.entity.Statistic;
+import sample.backend.service.FileService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
 
@@ -26,6 +29,9 @@ public class Controller {
 
     @Autowired
     private RandomController randomController;
+
+    @Autowired
+    private FileService fileService;
 
     @FXML
     private TextField leftBoundary;
@@ -79,5 +85,11 @@ public class Controller {
 
         data.add(historyDto);
         data.remove(0);
+    }
+
+    @FXML
+    public void loadFile() throws IOException {
+        File file = fileService.loadFile();
+        fileService.parseFile(file);
     }
 }

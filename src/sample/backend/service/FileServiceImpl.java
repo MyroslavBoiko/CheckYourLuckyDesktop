@@ -1,28 +1,41 @@
 package sample.backend.service;
 
 import javafx.stage.FileChooser;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+@Service
 public class FileServiceImpl implements FileService {
 
     @Override
     public File loadFile() {
         FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text", ".txt",".docx"));
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text", ".txt",".doc",".docx"));
         File selectedFile = fc.showOpenDialog(null);
-
-
-        if (selectedFile != null) {
-
-        }
         return selectedFile;
     }
 
     @Override
-    public void parseFile(File file){
+    public String parseFile(File file) throws IOException {
+        String range = null;
+        String values = null;
+        String data = new String(Files.readAllBytes(Paths.get(file.getPath())));
+        String patternRange = "^(\\d+-\\d+)\\s+([\\d\\s+,]+$)";
+        Pattern pattern = Pattern.compile(patternRange);
+        Matcher matcher = pattern.matcher(data);
 
+        if(matcher.find()){
+            range = matcher.group(1);
+            values = matcher.group(2);
+        }
+
+        return range + values;
     }
 
     @Override

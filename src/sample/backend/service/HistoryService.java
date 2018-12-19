@@ -8,7 +8,6 @@ import sample.backend.entity.HistoryDto;
 import sample.backend.entity.IdIpEntity;
 import sample.backend.repository.HistoryRepository;
 import sample.backend.repository.IpRepository;
-import sample.backend.utils.RuletteNumList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class HistoryService implements IHistoryService{
         List<HistoryDto> historyDtos = new ArrayList<>();
         for (HistoryDbEntity history:
              historyDbEntities) {
-            HistoryDto dto = new HistoryDto(history.getBet(), history.getRange(), Integer.parseInt(history.getResult()), history.isWin(), RuletteNumList.getNumber(Integer.parseInt(history.getResult())).getColor());
+            HistoryDto dto = new HistoryDto(history.getBet(), history.getRange(), Integer.parseInt(history.getResult()), history.isWin());
             historyDtos.add(dto);
         }
         return historyDtos;
