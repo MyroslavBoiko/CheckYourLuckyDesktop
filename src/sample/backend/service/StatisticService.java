@@ -48,4 +48,40 @@ public class StatisticService {
         }
         return statisticRepository.findAllById(statisticRequest.getId());
     }
+
+    public List<Statistic> getStatistic(RangeStringEntity request, int[] numbers, String ipAddress) {
+        IdIpEntity idIpEntity = ipRepository.findByIp(ipAddress);
+        if (idIpEntity == null) {
+            idIpEntity = new IdIpEntity();
+            idIpEntity.setIp(ipAddress);
+            ipRepository.save(idIpEntity);
+        }
+        StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), request.getRange());
+        if (statisticRequest == null) {
+            statisticRequest = new StatisticRequest();
+            statisticRequest.setIp(idIpEntity);
+            statisticRequest.setCount(0);
+            statisticRequest.setRange(request.getRange());
+            statisticRequestRepository.save(statisticRequest);
+            List<Statistic> statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
+            for (int i = 0; i < numbers.length; i++) {
+                statisticRequest.setCount(statisticRequest.getCount() + 1);
+                for (Statistic statistic:
+                        statistics) {
+                    if (statistic.getValue().compareTo(numbers[i]) == 0)
+                        statistic.setCount(statistic.getCount() + 1);
+                }
+            }
+            for (Statistic statistic:
+                    statistics) {
+                statistic.setPercent(statistic.getCount().doubleValue()/statisticRequest.getCount());
+            }
+            for (Statistic statistic:
+                    statistics) {
+                statisticRepository.save(statistic);
+            }
+        }
+        return statisticRepository.findAllById(statisticRequest.getId());
+    }
+
 }

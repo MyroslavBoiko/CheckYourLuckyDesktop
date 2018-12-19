@@ -92,6 +92,9 @@ public class Controller {
 
         data.add(historyDto);
         data.remove(0);
-
+        List<Statistic> statistics =
+                randomController.getStatistic(new RangeStringEntity(historyDto.getRange()));
+        dataStatistic.clear();
+        dataStatistic.addAll(statistics);
     }
 }
