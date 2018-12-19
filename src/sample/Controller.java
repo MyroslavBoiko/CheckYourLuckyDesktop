@@ -6,13 +6,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sample.backend.controller.RandomController;
-import sample.backend.entity.HistoryDbEntity;
-import sample.backend.entity.HistoryDto;
+import sample.backend.entity.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import sample.backend.entity.RangeLuckEntity;
-import sample.backend.entity.Statistic;
 
 import javax.annotation.PostConstruct;
 import java.net.UnknownHostException;
@@ -65,6 +62,22 @@ public class Controller {
         historyTable.getColumns().addAll(betColumn, rangeColumn,choiceColumn,gameColumn);
 
         historyTable.setItems(data);
+
+        List<Statistic> statistics = randomController.getStatistic(new RangeStringEntity("0-0"));
+        dataStatistic = FXCollections.observableArrayList(statistics);
+
+        TableColumn<Statistic, String> valueColumn = new TableColumn<>("value");
+        betColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+        TableColumn<Statistic, String> countColumn = new TableColumn<>("count");
+        rangeColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        TableColumn<Statistic, String> percentColumn = new TableColumn<>("percent");
+        choiceColumn.setCellValueFactory(new PropertyValueFactory<>("percent"));
+
+        statisticTable.getColumns().addAll(valueColumn, countColumn, percentColumn);
+
+        statisticTable.setItems(dataStatistic);
     }
 
     @FXML
@@ -79,5 +92,6 @@ public class Controller {
 
         data.add(historyDto);
         data.remove(0);
+
     }
 }
