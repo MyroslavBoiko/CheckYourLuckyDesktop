@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 import sample.backend.controller.RandomController;
 import sample.backend.entity.HistoryDbEntity;
@@ -13,16 +12,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sample.backend.entity.RangeLuckEntity;
+import sample.backend.entity.Statistic;
 
 import javax.annotation.PostConstruct;
-import java.beans.XMLDecoder;
-import java.io.*;
 import java.net.UnknownHostException;
 import java.util.List;
 
 public class Controller {
 
     private ObservableList<HistoryDto> data;
+
+    private ObservableList<Statistic> dataStatistic;
 
     @Autowired
     private RandomController randomController;
@@ -41,6 +41,9 @@ public class Controller {
 
     @FXML
     private TableView<HistoryDto> historyTable;
+
+    @FXML
+    private TableView<Statistic> statisticTable;
 
     @PostConstruct
     public void init() throws UnknownHostException {
@@ -76,23 +79,5 @@ public class Controller {
 
         data.add(historyDto);
         data.remove(0);
-    }
-
-    @FXML
-    public void loadFile(){
-
-    }
-    public void setDataFlights(String path) throws FileNotFoundException {
-        if (!path.contains(".txt"))
-            throw new FileNotFoundException("Error while opening this file.");
-        try {
-            BufferedReader bd = new BufferedReader(new FileReader(path));
-            XMLDecoder decoder =
-                    new XMLDecoder(new BufferedInputStream(
-                            new FileInputStream(path)));
-            decoder.close();
-        } catch (Exception e) {
-            throw new FileNotFoundException("Error while reading from file.");
-        }
     }
 }

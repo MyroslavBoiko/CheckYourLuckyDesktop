@@ -46,9 +46,6 @@ public class StatisticService {
                 statisticRepository.save(statistic);
             }
         }
-        List<Statistic> statisticResult = new ArrayList<>();
-        statisticResult.add(statisticRepository.findAllByIdMax(statisticRequest.getId()));
-        statisticResult.add(statisticRepository.findAllByIdMin(statisticRequest.getId()));
-        return statisticResult;
+        return statisticRepository.findAllById(statisticRequest.getId());
     }
 }
