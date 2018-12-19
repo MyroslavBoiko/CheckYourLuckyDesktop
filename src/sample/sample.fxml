@@ -13,11 +13,11 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <TabPane layoutY="25.0" prefHeight="574.0" prefWidth="1010.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="-1.0" prefHeight="600.0" prefWidth="1010.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Range">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="997.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="531.0" prefWidth="982.0">
                      <children>
                         <Button fx:id="checkLuckBtn" layoutX="318.0" layoutY="273.0" mnemonicParsing="false" onAction="#checkLuck" text="Check your luck" />
                         <TextField fx:id="leftBoundary" layoutX="70.0" layoutY="158.0" />
@@ -35,19 +35,22 @@
           </Tab>
           <Tab text="Statistic">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="533.0" prefWidth="1008.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <MenuBar prefHeight="25.0" prefWidth="1002.0">
+                           <menus>
+                              <Menu mnemonicParsing="false" text="File">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Load" />
+                                 </items>
+                              </Menu>
+                           </menus>
+                        </MenuBar>
+                     </children>
+                  </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="1010.0">
-         <menus>
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <MenuItem fx:id="loadFileBtn" mnemonicParsing="false" onAction="#loadFile" text="Load" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
    </children>
 </AnchorPane>
