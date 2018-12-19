@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import sample.backend.entity.RangeLuckEntity;
+import sample.backend.entity.Statistic;
 
 import javax.annotation.PostConstruct;
 import java.net.UnknownHostException;
@@ -20,6 +21,8 @@ import java.util.List;
 public class Controller {
 
     private ObservableList<HistoryDto> data;
+
+    private ObservableList<Statistic> dataStatistic;
 
     @Autowired
     private RandomController randomController;
@@ -38,6 +41,9 @@ public class Controller {
 
     @FXML
     private TableView<HistoryDto> historyTable;
+
+    @FXML
+    private TableView<Statistic> statisticTable;
 
     @PostConstruct
     public void init() throws UnknownHostException {
@@ -74,5 +80,4 @@ public class Controller {
         data.add(historyDto);
         data.remove(0);
     }
-
 }

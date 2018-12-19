@@ -7,11 +7,12 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <TabPane layoutY="-1.0" prefHeight="600.0" prefWidth="1010.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -46,6 +47,13 @@
                               </Menu>
                            </menus>
                         </MenuBar>
+                        <TableView layoutX="7.0" layoutY="25.0" prefHeight="489.0" prefWidth="988.0">
+                          <columns>
+                            <TableColumn fx:id="" prefWidth="258.99998474121094" text="Value" />
+                            <TableColumn minWidth="0.0" prefWidth="478.0" text="Count" />
+                              <TableColumn prefWidth="250.0" text="Percent" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </content>

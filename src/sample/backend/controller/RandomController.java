@@ -37,10 +37,6 @@ public class RandomController {
         return randomService.getLuckyTry(InetAddress.getLocalHost().toString(), rangeLuckEntity);
     }
 
-    public HistoryDto getRouletteNumber(TryLuckEntity tryLuckEntity) throws UnknownHostException {
-        return randomService.getLuckyTry(InetAddress.getLocalHost().toString(), tryLuckEntity);
-    }
-
     public List<Statistic> getStatistic(RangeStringEntity rangeStringEntity) throws UnknownHostException {
         return statisticService.getStatistic(rangeStringEntity, InetAddress.getLocalHost().toString());
     }
