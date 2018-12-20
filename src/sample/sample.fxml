@@ -47,13 +47,7 @@
                               </Menu>
                            </menus>
                         </MenuBar>
-                        <TableView layoutX="7.0" layoutY="25.0" prefHeight="489.0" prefWidth="988.0">
-                          <columns>
-                            <TableColumn fx:id="" prefWidth="258.99998474121094" text="Value" />
-                            <TableColumn minWidth="0.0" prefWidth="478.0" text="Count" />
-                              <TableColumn prefWidth="250.0" text="Percent" />
-                          </columns>
-                        </TableView>
+                        <TableView fx:id="statisticTable" layoutX="7.0" layoutY="25.0" prefHeight="489.0" prefWidth="988.0"/>
                      </children>
                   </AnchorPane>
             </content>
