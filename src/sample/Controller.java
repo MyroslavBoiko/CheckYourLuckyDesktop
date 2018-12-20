@@ -115,6 +115,8 @@ public class Controller {
     public void loadFile() throws IOException {
         File file = fileService.loadFile();
         FileData data = fileService.parseFile(file);
-        statisticService.getStatistic(data, InetAddress.getLocalHost().toString());
+        List<Statistic> statistics = statisticService.getStatistic(data, InetAddress.getLocalHost().toString());
+        dataStatistic.clear();
+        dataStatistic.addAll(statistics);
     }
 }
