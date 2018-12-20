@@ -76,7 +76,7 @@ public class Controller {
 
         historyTable.setItems(data);
 
-        List<Statistic> statistics = randomController.getStatistic(new RangeStringEntity("0-0"));
+        List<Statistic> statistics = randomController.getStatistic(new RangeStringEntity("0-10"));
         dataStatistic = FXCollections.observableArrayList(statistics);
 
         TableColumn<Statistic, String> valueColumn = new TableColumn<>("value");
@@ -113,8 +113,10 @@ public class Controller {
 
     @FXML
     public void loadFile() throws IOException {
-        File file = fileService.loadFile();
-        FileData data = fileService.parseFile(file);
-        statisticService.getStatistic(data, InetAddress.getLocalHost().toString());
+            File file = fileService.loadFile();
+            FileData data = fileService.parseFile(file);
+            List<Statistic> statistics = statisticService.getStatistic(data, InetAddress.getLocalHost().toString());
+            dataStatistic.clear();
+            dataStatistic.addAll(statistics);
     }
 }

@@ -54,29 +54,32 @@ public class StatisticService {
             ipRepository.save(idIpEntity);
         }
         StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), fileData.getRange());
+        List<Statistic> statistics = null;
         if (statisticRequest == null) {
             statisticRequest = new StatisticRequest();
             statisticRequest.setIp(idIpEntity);
             statisticRequest.setCount(0);
             statisticRequest.setRange(fileData.getRange());
             statisticRequestRepository.save(statisticRequest);
-            List<Statistic> statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
-            for (int i = 0; i < fileData.getValues().length; i++) {
-                statisticRequest.setCount(statisticRequest.getCount() + 1);
-                for (Statistic statistic:
-                        statistics) {
-                    if (statistic.getValue().compareTo(fileData.getValues()[i]) == 0)
-                        statistic.setCount(statistic.getCount() + 1);
-                }
-            }
+            statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
+        }
+        if(statistics == null)
+            statistics = statisticRepository.findAllById(statisticRequest.getId());
+        for (int i = 0; i < fileData.getValues().length; i++) {
+            statisticRequest.setCount(statisticRequest.getCount() + 1);
             for (Statistic statistic:
                     statistics) {
-                statistic.setPercent(statistic.getCount().doubleValue()/statisticRequest.getCount());
+                if (statistic.getValue().compareTo(fileData.getValues()[i]) == 0)
+                    statistic.setCount(statistic.getCount() + 1);
             }
-            for (Statistic statistic:
-                    statistics) {
-                statisticRepository.save(statistic);
-            }
+        }
+        for (Statistic statistic:
+                statistics) {
+            statistic.setPercent(statistic.getCount().doubleValue()/statisticRequest.getCount());
+        }
+        for (Statistic statistic:
+                statistics) {
+            statisticRepository.save(statistic);
         }
         return statisticRepository.findAllById(statisticRequest.getId());
     }
