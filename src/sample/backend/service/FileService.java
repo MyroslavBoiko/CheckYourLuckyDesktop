@@ -1,10 +1,11 @@
 package sample.backend.service;
 
+import sample.backend.entity.FileData;
+
 import java.io.File;
 import java.io.IOException;
 
 public interface FileService {
     File loadFile();
-    String parseFile(File file) throws IOException;
-    void saveParsedData();
+    FileData parseFile(File file) throws IOException;
 }

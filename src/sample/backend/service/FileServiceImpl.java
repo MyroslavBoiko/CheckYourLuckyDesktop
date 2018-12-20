@@ -1,18 +1,24 @@
 package sample.backend.service;
 
 import javafx.stage.FileChooser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sample.backend.entity.FileData;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
 public class FileServiceImpl implements FileService {
 
+    @Autowired
+    StatisticService statisticService;
     @Override
     public File loadFile() {
         FileChooser fc = new FileChooser();
@@ -22,7 +28,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String parseFile(File file) throws IOException {
+    public FileData parseFile(File file) throws IOException {
         String range = null;
         String values = null;
         String data = new String(Files.readAllBytes(Paths.get(file.getPath())));
@@ -34,13 +40,12 @@ public class FileServiceImpl implements FileService {
             range = matcher.group(1);
             values = matcher.group(2);
         }
-
-        return range + values;
-    }
-
-    @Override
-    public void saveParsedData() {
-
+        List<Integer> intValues = new ArrayList<>();
+        String[] stringValues = values.split("[\\s,]+");
+        for (String s: stringValues) {
+            intValues.add(Integer.valueOf(s));
+        }
+        return new FileData(range, intValues.toArray(new Integer[intValues.size()]));
     }
 
 }

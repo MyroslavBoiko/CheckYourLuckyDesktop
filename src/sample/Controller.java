@@ -13,10 +13,12 @@ import javafx.scene.control.TextField;
 import sample.backend.entity.RangeLuckEntity;
 import sample.backend.entity.Statistic;
 import sample.backend.service.FileService;
+import sample.backend.service.StatisticService;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
@@ -25,6 +27,9 @@ public class Controller {
     private ObservableList<HistoryDto> data;
 
     private ObservableList<Statistic> dataStatistic;
+
+    @Autowired
+    private StatisticService statisticService;
 
     @Autowired
     private RandomController randomController;
@@ -109,6 +114,7 @@ public class Controller {
     @FXML
     public void loadFile() throws IOException {
         File file = fileService.loadFile();
-        fileService.parseFile(file);
+        FileData data = fileService.parseFile(file);
+        statisticService.getStatistic(data, InetAddress.getLocalHost().toString());
     }
 }
