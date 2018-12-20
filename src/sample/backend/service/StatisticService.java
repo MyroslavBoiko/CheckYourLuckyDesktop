@@ -2,10 +2,7 @@ package sample.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sample.backend.entity.IdIpEntity;
-import sample.backend.entity.RangeStringEntity;
-import sample.backend.entity.Statistic;
-import sample.backend.entity.StatisticRequest;
+import sample.backend.entity.*;
 import sample.backend.repository.IpRepository;
 import sample.backend.repository.StatisticRepository;
 import sample.backend.repository.StatisticRequestRepository;
@@ -49,26 +46,26 @@ public class StatisticService {
         return statisticRepository.findAllById(statisticRequest.getId());
     }
 
-    public List<Statistic> getStatistic(RangeStringEntity request, int[] numbers, String ipAddress) {
+    public List<Statistic> getStatistic(FileData fileData, String ipAddress) {
         IdIpEntity idIpEntity = ipRepository.findByIp(ipAddress);
         if (idIpEntity == null) {
             idIpEntity = new IdIpEntity();
             idIpEntity.setIp(ipAddress);
             ipRepository.save(idIpEntity);
         }
-        StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), request.getRange());
+        StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), fileData.getRange());
         if (statisticRequest == null) {
             statisticRequest = new StatisticRequest();
             statisticRequest.setIp(idIpEntity);
             statisticRequest.setCount(0);
-            statisticRequest.setRange(request.getRange());
+            statisticRequest.setRange(fileData.getRange());
             statisticRequestRepository.save(statisticRequest);
             List<Statistic> statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
-            for (int i = 0; i < numbers.length; i++) {
+            for (int i = 0; i < fileData.getValues().length; i++) {
                 statisticRequest.setCount(statisticRequest.getCount() + 1);
                 for (Statistic statistic:
                         statistics) {
-                    if (statistic.getValue().compareTo(numbers[i]) == 0)
+                    if (statistic.getValue().compareTo(fileData.getValues()[i]) == 0)
                         statistic.setCount(statistic.getCount() + 1);
                 }
             }

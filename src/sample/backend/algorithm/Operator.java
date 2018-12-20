@@ -27,7 +27,7 @@ public class Operator {
     }
 
     private static int makeRandom(int first, int second){
-        return ThreadLocalRandom.current().nextInt(first, second);
+        return ThreadLocalRandom.current().nextInt(first, second + 1);
     }
 
 }
