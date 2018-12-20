@@ -7,12 +7,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <TabPane layoutY="-1.0" prefHeight="600.0" prefWidth="1010.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -42,12 +41,12 @@
                            <menus>
                               <Menu mnemonicParsing="false" text="File">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Load" />
+                                    <MenuItem fx:id="loadFileBtn" mnemonicParsing="false" onAction="#loadFile" text="Load" />
                                  </items>
                               </Menu>
                            </menus>
                         </MenuBar>
-                        <TableView fx:id="statisticTable" layoutX="7.0" layoutY="25.0" prefHeight="489.0" prefWidth="988.0"/>
+                        <TableView fx:id="statisticTable" layoutX="7.0" layoutY="25.0" prefHeight="489.0" prefWidth="988.0" />
                      </children>
                   </AnchorPane>
             </content>

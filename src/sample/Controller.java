@@ -75,13 +75,13 @@ public class Controller {
         dataStatistic = FXCollections.observableArrayList(statistics);
 
         TableColumn<Statistic, String> valueColumn = new TableColumn<>("value");
-        betColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
         TableColumn<Statistic, String> countColumn = new TableColumn<>("count");
-        rangeColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
         TableColumn<Statistic, String> percentColumn = new TableColumn<>("percent");
-        choiceColumn.setCellValueFactory(new PropertyValueFactory<>("percent"));
+        percentColumn.setCellValueFactory(new PropertyValueFactory<>("percent"));
 
         statisticTable.getColumns().addAll(valueColumn, countColumn, percentColumn);
 
