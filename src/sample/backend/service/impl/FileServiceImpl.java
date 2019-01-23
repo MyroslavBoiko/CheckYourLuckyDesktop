@@ -1,9 +1,10 @@
-package sample.backend.service;
+package sample.backend.service.impl;
 
 import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sample.backend.entity.FileData;
+import sample.backend.service.FileService;
 
 import java.io.File;
 import java.io.IOException;

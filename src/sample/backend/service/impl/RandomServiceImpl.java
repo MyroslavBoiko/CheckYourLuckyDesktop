@@ -1,4 +1,4 @@
-package sample.backend.service;
+package sample.backend.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,7 @@ import sample.backend.repository.HistoryRepository;
 import sample.backend.repository.IpRepository;
 import sample.backend.repository.StatisticRepository;
 import sample.backend.repository.StatisticRequestRepository;
+import sample.backend.service.RandomService;
 import sample.backend.utils.ParseRange;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package sample.backend.service;
+package sample.backend.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,12 +8,13 @@ import sample.backend.entity.HistoryDto;
 import sample.backend.entity.IdIpEntity;
 import sample.backend.repository.HistoryRepository;
 import sample.backend.repository.IpRepository;
+import sample.backend.service.IHistoryService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class HistoryService implements IHistoryService{
+public class HistoryService implements IHistoryService {
 
     @Autowired
     private IpRepository ipRepository;

@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import sample.backend.entity.RangeLuckEntity;
 import sample.backend.entity.Statistic;
 import sample.backend.service.FileService;
-import sample.backend.service.StatisticService;
+import sample.backend.service.impl.StatisticService;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
