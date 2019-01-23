@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import sample.backend.entity.RangeLuckEntity;
 import sample.backend.entity.Statistic;
 import sample.backend.service.FileService;
-import sample.backend.service.StatisticService;
+import sample.backend.service.StatisticServiceImpl;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -29,7 +29,7 @@ public class Controller {
     private ObservableList<Statistic> dataStatistic;
 
     @Autowired
-    private StatisticService statisticService;
+    private StatisticServiceImpl statisticService;
 
     @Autowired
     private RandomController randomController;
