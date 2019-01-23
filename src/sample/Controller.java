@@ -2,18 +2,16 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sample.backend.controller.RandomController;
 import sample.backend.entity.*;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import sample.backend.entity.RangeLuckEntity;
-import sample.backend.entity.Statistic;
 import sample.backend.service.FileService;
-import sample.backend.service.impl.StatisticServiceImpl;
+import sample.backend.service.StatisticService;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -29,7 +27,7 @@ public class Controller {
     private ObservableList<Statistic> dataStatistic;
 
     @Autowired
-    private StatisticServiceImpl statisticService;
+    private StatisticService statisticService;
 
     @Autowired
     private RandomController randomController;

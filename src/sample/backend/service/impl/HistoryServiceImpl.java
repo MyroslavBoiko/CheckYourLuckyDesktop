@@ -22,10 +22,6 @@ public class HistoryServiceImpl implements HistoryService {
     @Autowired
     private HistoryRepository historyRepository;
 
-    public void saveHistory(HistoryDbEntity historyDbEntity){
-        historyRepository.save(historyDbEntity);
-    }
-
     @Transactional
     @Override
     public List<HistoryDto> getSeveralLastHistory(String ipAddress){
