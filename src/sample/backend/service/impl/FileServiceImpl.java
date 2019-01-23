@@ -1,9 +1,10 @@
-package sample.backend.service;
+package sample.backend.service.impl;
 
 import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sample.backend.entity.FileData;
+import sample.backend.service.FileService;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    StatisticService statisticService;
+    StatisticServiceImpl statisticService;
     @Override
     public File loadFile() {
         FileChooser fc = new FileChooser();

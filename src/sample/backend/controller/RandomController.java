@@ -3,12 +3,11 @@ package sample.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sample.backend.entity.*;
-import sample.backend.service.HistoryService;
-import sample.backend.service.IpService;
+import sample.backend.service.impl.HistoryServiceImpl;
+import sample.backend.service.impl.IpServiceImpl;
 import sample.backend.service.RandomService;
-import sample.backend.service.StatisticService;
+import sample.backend.service.impl.StatisticServiceImpl;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -20,13 +19,13 @@ public class RandomController {
     private RandomService randomService;
 
     @Autowired
-    private StatisticService statisticService;
+    private StatisticServiceImpl statisticService;
 
     @Autowired
-    private HistoryService historyService;
+    private HistoryServiceImpl historyService;
 
     @Autowired
-    private IpService ipService;
+    private IpServiceImpl ipService;
 
     public List<HistoryDto> getHistory() throws UnknownHostException {
         ipService.saveIp(InetAddress.getLocalHost().toString());
