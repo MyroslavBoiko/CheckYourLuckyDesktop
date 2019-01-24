@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    StatisticService statisticService;
+    StatisticServiceImpl statisticService;
     @Override
     public File loadFile() {
         FileChooser fc = new FileChooser();
