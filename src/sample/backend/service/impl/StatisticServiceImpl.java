@@ -8,6 +8,7 @@ import sample.backend.repository.StatisticRepository;
 import sample.backend.repository.StatisticRequestRepository;
 import sample.backend.utils.ParseRange;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,65 +23,71 @@ public class StatisticServiceImpl implements StatisticService {
     @Autowired
     private StatisticRequestRepository statisticRequestRepository;
 
+
     public List<Statistic> getStatistic(RangeStringEntity request, String ipAddress) {
-        IdIpEntity idIpEntity = ipRepository.findByIp(ipAddress);
-        if (idIpEntity == null) {
-            idIpEntity = new IdIpEntity();
-            idIpEntity.setIp(ipAddress);
-            ipRepository.save(idIpEntity);
-        }
-        StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), request.getRange());
-        if (statisticRequest == null) {
-            statisticRequest = new StatisticRequest();
-            statisticRequest.setIp(idIpEntity);
-            statisticRequest.setCount(0);
-            statisticRequest.setRange(request.getRange());
-            statisticRequestRepository.save(statisticRequest);
-            List<Statistic> statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
-            for (Statistic statistic:
-                 statistics) {
-                statisticRepository.save(statistic);
+        if (ipAddress != null) {
+            IdIpEntity idIpEntity = findOrSaveIpEntity(ipAddress);
+            StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), request.getRange());
+            if (statisticRequest == null) {
+                statisticRequest = new StatisticRequest();
+                statisticRequest.setIp(idIpEntity);
+                statisticRequest.setCount(0);
+                statisticRequest.setRange(request.getRange());
+                statisticRequestRepository.save(statisticRequest);
+                List<Statistic> statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
+                for (Statistic statistic :
+                        statistics) {
+                    statisticRepository.save(statistic);
+                }
             }
+            return statisticRepository.findAllById(statisticRequest.getId());
         }
-        return statisticRepository.findAllById(statisticRequest.getId());
+        return null;
     }
 
     public List<Statistic> getStatistic(FileData fileData, String ipAddress) {
+        if (ipAddress != null) {
+            IdIpEntity idIpEntity = findOrSaveIpEntity(ipAddress);
+            StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), fileData.getRange());
+            List<Statistic> statistics = null;
+            if (statisticRequest == null) {
+                statisticRequest = new StatisticRequest();
+                statisticRequest.setIp(idIpEntity);
+                statisticRequest.setCount(0);
+                statisticRequest.setRange(fileData.getRange());
+                statisticRequestRepository.save(statisticRequest);
+                statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
+            }
+            if (statistics == null)
+                statistics = statisticRepository.findAllById(statisticRequest.getId());
+            for (int i = 0; i < fileData.getValues().length; i++) {
+                statisticRequest.setCount(statisticRequest.getCount() + 1);
+                for (Statistic statistic :
+                        statistics) {
+                    if (statistic.getValue().compareTo(fileData.getValues()[i]) == 0)
+                        statistic.setCount(statistic.getCount() + 1);
+                }
+            }
+            for (Statistic statistic :
+                    statistics) {
+                statistic.setPercent(statistic.getCount().doubleValue() / statisticRequest.getCount());
+            }
+            for (Statistic statistic :
+                    statistics) {
+                statisticRepository.save(statistic);
+            }
+            return statisticRepository.findAllById(statisticRequest.getId());
+        }
+        return null;
+    }
+
+    private IdIpEntity findOrSaveIpEntity(String ipAddress) {
         IdIpEntity idIpEntity = ipRepository.findByIp(ipAddress);
         if (idIpEntity == null) {
             idIpEntity = new IdIpEntity();
             idIpEntity.setIp(ipAddress);
-            ipRepository.save(idIpEntity);
+            idIpEntity = ipRepository.save(idIpEntity);
         }
-        StatisticRequest statisticRequest = statisticRequestRepository.findByIpEquals(idIpEntity.getId(), fileData.getRange());
-        List<Statistic> statistics = null;
-        if (statisticRequest == null) {
-            statisticRequest = new StatisticRequest();
-            statisticRequest.setIp(idIpEntity);
-            statisticRequest.setCount(0);
-            statisticRequest.setRange(fileData.getRange());
-            statisticRequestRepository.save(statisticRequest);
-            statistics = ParseRange.fillStatistic(ParseRange.parseRange(statisticRequest.getRange()), statisticRequest);
-        }
-        if(statistics == null)
-            statistics = statisticRepository.findAllById(statisticRequest.getId());
-        for (int i = 0; i < fileData.getValues().length; i++) {
-            statisticRequest.setCount(statisticRequest.getCount() + 1);
-            for (Statistic statistic:
-                    statistics) {
-                if (statistic.getValue().compareTo(fileData.getValues()[i]) == 0)
-                    statistic.setCount(statistic.getCount() + 1);
-            }
-        }
-        for (Statistic statistic:
-                statistics) {
-            statistic.setPercent(statistic.getCount().doubleValue()/statisticRequest.getCount());
-        }
-        for (Statistic statistic:
-                statistics) {
-            statisticRepository.save(statistic);
-        }
-        return statisticRepository.findAllById(statisticRequest.getId());
+        return idIpEntity;
     }
-
 }

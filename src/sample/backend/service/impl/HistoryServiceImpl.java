@@ -25,19 +25,24 @@ public class HistoryServiceImpl implements HistoryService {
     @Transactional
     @Override
     public List<HistoryDto> getSeveralLastHistory(String ipAddress){
-        IdIpEntity idIpEntity = ipRepository.findByIp(ipAddress);
-        if(idIpEntity == null){
-            idIpEntity = new IdIpEntity();
-            idIpEntity.setIp(ipAddress);
-            ipRepository.save(idIpEntity);
-        }
-        List<HistoryDbEntity> historyDbEntities = historyRepository.findAllByIpEqualsOrderById(ipRepository.findByIp(ipAddress).getId());
+        IdIpEntity idIpEntity = findOrSaveIpEntity(ipAddress);
+        List<HistoryDbEntity> historyDbEntities = historyRepository.findAllByIpEqualsOrderById(ipRepository.findByIp(idIpEntity.getIp()).getId());
         List<HistoryDto> historyDtos = new ArrayList<>();
-        for (HistoryDbEntity history:
-             historyDbEntities) {
-            HistoryDto dto = new HistoryDto(history.getBet(), history.getRange(), Integer.parseInt(history.getResult()), history.isWin());
+        for (HistoryDbEntity history : historyDbEntities) {
+            HistoryDto dto = new HistoryDto(history.getBet(), history.getRange(),
+                    Integer.parseInt(history.getResult()), history.isWin() ? true : false);
             historyDtos.add(dto);
         }
         return historyDtos;
+    }
+
+    private IdIpEntity findOrSaveIpEntity(String ipAddress) {
+        IdIpEntity idIpEntity = ipRepository.findByIp(ipAddress);
+        if (idIpEntity == null) {
+            idIpEntity = new IdIpEntity();
+            idIpEntity.setIp(ipAddress);
+            idIpEntity = ipRepository.save(idIpEntity);
+        }
+        return idIpEntity;
     }
 }
