@@ -95,6 +95,18 @@ public class Controller {
 
     @FXML
     public void checkLuck() throws UnknownHostException {
+        if (leftBoundary.getText().isEmpty() || rightBoundary.getText().isEmpty() || yourLeftBoundary.getText().isEmpty() || yourRightBoundary.getText().isEmpty())
+            return;
+        try{
+            int leftBoundTest = Integer.parseInt(leftBoundary.getText());
+            int rightBoundTest = Integer.parseInt(rightBoundary.getText());
+            int yourLeftBoundaryTest = Integer.parseInt(yourLeftBoundary.getText());
+            int yourRightBoundaryTest = Integer.parseInt(yourRightBoundary.getText());
+            if (yourLeftBoundaryTest < leftBoundTest || yourRightBoundaryTest > rightBoundTest)
+                throw new Exception("Bad boundary!");
+        }catch (Exception e){
+            return;
+        }
         String leftBound = leftBoundary.getText();
         String rightBound = rightBoundary.getText();
         String yourLeftBound = yourLeftBoundary.getText();
