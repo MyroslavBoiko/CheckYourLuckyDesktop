@@ -6,7 +6,6 @@ import sample.backend.entity.*;
 import sample.backend.repository.IpRepository;
 import sample.backend.repository.StatisticRepository;
 import sample.backend.repository.StatisticRequestRepository;
-import sample.backend.service.StatisticService;
 import sample.backend.utils.ParseRange;
 
 import java.util.List;

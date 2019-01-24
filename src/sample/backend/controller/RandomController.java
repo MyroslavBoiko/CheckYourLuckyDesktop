@@ -7,9 +7,9 @@ import sample.backend.entity.RangeLuckEntity;
 import sample.backend.entity.RangeStringEntity;
 import sample.backend.entity.Statistic;
 import sample.backend.service.HistoryService;
-import sample.backend.service.IpService;
 import sample.backend.service.RandomService;
-import sample.backend.service.StatisticService;
+import sample.backend.service.impl.IpService;
+import sample.backend.service.impl.StatisticService;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

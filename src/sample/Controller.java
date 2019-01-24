@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -56,6 +57,7 @@ public class Controller {
     @PostConstruct
     public void init() throws UnknownHostException {
         List<HistoryDto> history = randomController.getHistory();
+
         data = FXCollections.observableArrayList(history);
 
         TableColumn<HistoryDto, String> betColumn = new TableColumn<>("bet");
@@ -83,7 +85,7 @@ public class Controller {
         TableColumn<Statistic, String> countColumn = new TableColumn<>("count");
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
-        TableColumn<Statistic, String> percentColumn = new TableColumn<>("percent");
+        TableColumn<Statistic, String> percentColumn = new TableColumn<>("chance to win");
         percentColumn.setCellValueFactory(new PropertyValueFactory<>("percent"));
 
         statisticTable.getColumns().addAll(valueColumn, countColumn, percentColumn);
@@ -102,11 +104,13 @@ public class Controller {
                         yourLeftBound+"-"+yourRightBound));
 
         data.add(historyDto);
-        data.remove(0);
+        if (historyTable.getItems().size() == 4)
+            data.remove(0);
         List<Statistic> statistics =
                 randomController.getStatistic(new RangeStringEntity(historyDto.getRange()));
         dataStatistic.clear();
         dataStatistic.addAll(statistics);
+        makePercent();
     }
 
     @FXML
@@ -116,5 +120,13 @@ public class Controller {
             List<Statistic> statistics = statisticService.getStatistic(data, InetAddress.getLocalHost().toString());
             dataStatistic.clear();
             dataStatistic.addAll(statistics);
+            makePercent();
+    }
+
+    private void makePercent(){
+        for (Statistic statistic:
+             dataStatistic) {
+            statistic.setPercent(statistic.getPercent() * 100.0);
+        }
     }
 }

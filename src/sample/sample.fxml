@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <TabPane layoutY="-1.0" prefHeight="600.0" prefWidth="1010.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -29,7 +29,7 @@
                         <Label layoutX="293.0" layoutY="130.0" text="Your left boundary" />
                         <Label layoutX="293.0" layoutY="191.0" text="Your right boundary" />
                         <TableView fx:id="historyTable" layoutX="613.0" layoutY="155.0" prefHeight="103.0" prefWidth="203.0" />
-                        <Label layoutX="696.0" layoutY="128.0" text="History" />
+                        <Label layoutX="696.0" layoutY="132.0" text="History" />
                      </children></AnchorPane>
             </content>
           </Tab>
